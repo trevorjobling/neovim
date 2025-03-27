@@ -183,7 +183,23 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'ThePrimeagen/vim-be-good', -- Primeagen Vim Training
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local alpha = require 'alpha'
+      local dashboard = require 'alpha.themes.startify'
 
+      dashboard.section.header.val = {
+        [[████████ ██████  ███████ ██    ██  ██████  ██████  ]],
+        [[   ██    ██   ██ ██      ██    ██ ██    ██ ██   ██ ]],
+        [[   ██    ██████  █████   ██    ██ ██    ██ ██████  ]],
+        [[   ██    ██   ██ ██       ██  ██  ██    ██ ██   ██ ]],
+        [[   ██    ██   ██ ███████   ████    ██████  ██   ██ ]],
+      }
+      alpha.setup(dashboard.opts)
+    end,
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -939,7 +955,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
