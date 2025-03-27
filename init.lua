@@ -116,6 +116,10 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Use H and L to go to start and end of line
+vim.keymap.set('n', 'H', '0', { desc = 'Move to start of line' })
+vim.keymap.set('n', 'L', '$', { desc = 'Move to end of line' })
+
 -- Centre the screen after doing a page up/down. Suggested by Primeagen
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Centre screen vertically after page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Centre screen vertically after page down' })
