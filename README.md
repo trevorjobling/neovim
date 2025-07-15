@@ -1,5 +1,17 @@
 # Trevor's kickstart.nvim
 
+### Ubuntu Install Steps
+  
+```
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo apt update
+sudo apt install make gcc ripgrep unzip git xclip neovim
+git clone https://github.com/trevorjobling/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```
+
+
+
+
 ### Install External Dependencies
 
 External Requirements:
