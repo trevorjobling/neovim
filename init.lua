@@ -94,11 +94,10 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+-- Start of KEYMAPS
+local opts = { noremap = true, silent = true }
 
 -- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
@@ -136,11 +135,17 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- Use H and L to go to start and end of line
 vim.keymap.set('n', 'H', '0', { desc = 'Move to start of line' })
 vim.keymap.set('n', 'L', '$', { desc = 'Move to end of line' })
+vim.keymap.set('v', 'H', '0', { desc = 'Move to start of line' })
+vim.keymap.set('v', 'L', '$', { desc = 'Move to end of line' })
 
 -- Centre the screen after doing a page up/down. Suggested by Primeagen
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Centre screen vertically after page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Centre screen vertically after page down' })
 
+-- New Tabs
+vim.keymap.set("n", "te", ":tabedit<CR>", opts)
+vim.keymap.set("n", "sp", ":split<CR><C-w>l", opts)
+vim.keymap.set("n", "sv", ":vsplit<CR><C-w>l", opts)
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
 
 -- Create an autocommand group for the init.lua auto-reload
