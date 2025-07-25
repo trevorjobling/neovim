@@ -144,9 +144,14 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Centre screen vertically after
 
 -- New Tabs
 vim.keymap.set("n", "te", ":tabedit<CR>", opts)
-vim.keymap.set("n", "sp", ":split<CR><C-w>l", opts)
+vim.keymap.set("n", "sh", ":split<CR><C-w>l", opts) -- split horizontal
 vim.keymap.set("n", "sv", ":vsplit<CR><C-w>l", opts)
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
+-- Edit init.lua from anywhere
+vim.keymap.set('n', '<leader>ei', function()
+  vim.cmd('edit ' .. vim.fn.stdpath('config') .. '/init.lua')
+end, { desc = '[E]dit [I]nit.lua' })
 
 -- Create an autocommand group for the init.lua auto-reload
 local initGroup = vim.api.nvim_create_augroup('InitAutoReload', { clear = true })
