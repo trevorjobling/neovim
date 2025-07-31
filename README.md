@@ -1,6 +1,6 @@
 # Trevor's kickstart.nvim
 
-### Ubuntu Install Steps
+### Linux (Ubuntu-based) Install
   
 ```
 sudo add-apt-repository ppa:neovim-ppa/unstable -y

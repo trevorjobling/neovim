@@ -46,6 +46,11 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+if vim.g.neovide then
+    -- Paste from system clipboard in command-line mode
+    vim.keymap.set('c', '<C-v>', '<C-R>+', { noremap = true, silent = true, desc = "Paste from system clipboard in command-line mode" })
+end
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -141,6 +146,10 @@ vim.keymap.set('v', 'L', '$', { desc = 'Move to end of line' })
 -- Centre the screen after doing a page up/down. Suggested by Primeagen
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Centre screen vertically after page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Centre screen vertically after page down' })
+
+-- Trigger the exact same scroll-and-center action
+vim.keymap.set('n', '<A-k>', '<C-u>zz', { desc = 'Scroll Up (half screen) with Alt+K and Centre' })
+vim.keymap.set('n', '<A-j>', '<C-d>zz', { desc = 'Scroll Down (half screen) with Alt+J and Centre' })
 
 -- New Tabs
 vim.keymap.set("n", "te", ":tabedit<CR>", opts)
@@ -322,12 +331,6 @@ require('lazy').setup({
     },
   },
 
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
