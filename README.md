@@ -1,4 +1,4 @@
-# Trevor's kickstart.nvim
+# My neovim config
 
 ### Linux (Ubuntu-based) Install
   
