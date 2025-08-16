@@ -1,13 +1,13 @@
 # My neovim config
 
-### Linux (Ubuntu-based) Install
-  
+### Ubuntu-based Linux Install
 ```
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
 sudo apt install make gcc ripgrep unzip git xclip neovim
-git clone https://github.com/trevorjobling/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+git clone https://github.com/trevorjobling/neovim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 ```
+
 
 
 
