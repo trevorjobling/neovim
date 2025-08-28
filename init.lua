@@ -1,16 +1,7 @@
---[[
 --MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
-
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
-
---]]
---
+-- which is very useful when you're not exactly sure of what you're looking for.
 
 -- Set <space> as the leader key
--- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -20,13 +11,13 @@ vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+
+-- set wrapping
+vim.o.wrap = true -- enable word wrap
+vim.o.linebreak = true -- do not break in words
 
 -- Make line numbers default
 vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -36,7 +27,7 @@ vim.o.mouse = 'a'
 vim.o.showmode = false
 
 -- choose font for in Neovide and other GUIs
-vim.o.guifont = "FiraCode Nerd Font Mono:h13"
+vim.o.guifont = 'FiraCode Nerd Font:h13'
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -47,8 +38,8 @@ vim.schedule(function()
 end)
 
 if vim.g.neovide then
-    -- Paste from system clipboard in command-line mode
-    vim.keymap.set('c', '<C-v>', '<C-R>+', { noremap = true, silent = true, desc = "Paste from system clipboard in command-line mode" })
+  -- Paste from system clipboard in command-line mode
+  vim.keymap.set('c', '<C-v>', '<C-R>+', { noremap = true, silent = true, desc = 'Paste from system clipboard in command-line mode' })
 end
 
 -- Enable break indent
@@ -138,9 +129,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- Use H and L to go to start and end of line
-vim.keymap.set('n', 'H', '0', { desc = 'Move to start of line' })
+vim.keymap.set('n', 'H', '^', { desc = 'Move to start of line' })
 vim.keymap.set('n', 'L', '$', { desc = 'Move to end of line' })
-vim.keymap.set('v', 'H', '0', { desc = 'Move to start of line' })
+vim.keymap.set('v', 'H', '^', { desc = 'Move to start of line' })
 vim.keymap.set('v', 'L', '$', { desc = 'Move to end of line' })
 
 -- Centre the screen after doing a page up/down. Suggested by Primeagen
@@ -152,14 +143,14 @@ vim.keymap.set('n', '<A-k>', '<C-u>zz', { desc = 'Scroll Up (half screen) with A
 vim.keymap.set('n', '<A-j>', '<C-d>zz', { desc = 'Scroll Down (half screen) with Alt+J and Centre' })
 
 -- New Tabs
-vim.keymap.set("n", "te", ":tabedit<CR>", opts)
-vim.keymap.set("n", "sh", ":split<CR><C-w>l", opts) -- split horizontal
-vim.keymap.set("n", "sv", ":vsplit<CR><C-w>l", opts)
-vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
+vim.keymap.set('n', 'te', ':tabedit<CR>', opts)
+vim.keymap.set('n', 'sh', ':split<CR><C-w>l', opts) -- split horizontal
+vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>l', opts)
+vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
 
 -- Edit init.lua from anywhere
 vim.keymap.set('n', '<leader>ei', function()
-  vim.cmd('edit ' .. vim.fn.stdpath('config') .. '/init.lua')
+  vim.cmd('edit ' .. vim.fn.stdpath 'config' .. '/init.lua')
 end, { desc = '[E]dit [I]nit.lua' })
 
 -- Create an autocommand group for the init.lua auto-reload
@@ -220,7 +211,23 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  {
+    'm4xshen/hardtime.nvim',
+    lazy = false,
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = {},
+  },
   'ThePrimeagen/vim-be-good', -- Primeagen Vim Training
+
+  {
+    'bullets-vim/bullets.vim',
+    lazy = false,
+    init = function()
+      vim.g.bullets_enabled_file_types = { 'markdown', 'text', 'gitcommit', 'txt' }
+      vim.g.bullets_enable_in_empty_buffers = 1
+    end,
+  },
+
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   {
     'goolord/alpha-nvim',
@@ -254,13 +261,13 @@ require('lazy').setup({
   },
 
   {
-    "NeogitOrg/neogit",
+    'NeogitOrg/neogit',
     dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
 
       -- Only one of these is needed.
-      "nvim-telescope/telescope.nvim", -- optional
+      'nvim-telescope/telescope.nvim', -- optional
     },
   },
 
@@ -330,7 +337,6 @@ require('lazy').setup({
       },
     },
   },
-
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -876,12 +882,12 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000, -- Make sure to load this before other plugins that might depend on it
     config = function()
-      require('catppuccin').setup({
+      require('catppuccin').setup {
         flavour = 'macchiato', -- 'mocha' or 'latte', 'frappe', 'macchiato'
---        background = {
---          light = "latte",
---          dark = "mocha",
---      },
+        --        background = {
+        --          light = "latte",
+        --          dark = "mocha",
+        --      },
         transparent_background = true,
         term_colors = true,
         integrations = {
@@ -892,7 +898,7 @@ require('lazy').setup({
             enabled = true,
           },
         },
-      })
+      }
       -- Set the colourscheme
       vim.cmd.colorscheme 'catppuccin'
     end,
