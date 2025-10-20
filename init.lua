@@ -46,6 +46,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Open new markdown buffer in insert mode when nvim starts with no arguments
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Open markdown buffer in insert mode on startup with no args',
+  group = vim.api.nvim_create_augroup('startup-markdown', { clear = true }),
+  callback = function()
+    -- Only run if no files were specified and buffer is empty
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if vim.fn.argc() == 0 and bufname == '' then
+      vim.cmd 'setfiletype markdown'
+      vim.cmd 'startinsert'
+    end
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -92,23 +106,6 @@ require('lazy').setup({
   },
 
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-  {
-    'goolord/alpha-nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      local alpha = require 'alpha'
-      local dashboard = require 'alpha.themes.startify'
-
-      dashboard.section.header.val = {
-        [[████████ ██████  ███████ ██    ██  ██████  ██████  ]],
-        [[   ██    ██   ██ ██      ██    ██ ██    ██ ██   ██ ]],
-        [[   ██    ██████  █████   ██    ██ ██    ██ ██████  ]],
-        [[   ██    ██   ██ ██       ██  ██  ██    ██ ██   ██ ]],
-        [[   ██    ██   ██ ███████   ████    ██████  ██   ██ ]],
-      }
-      alpha.setup(dashboard.opts)
-    end,
-  },
 
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
