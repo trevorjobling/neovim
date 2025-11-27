@@ -7,6 +7,15 @@ vim.g.maplocalleader = ' ' -- must happen before loading plugins
 -- For conciseness
 local opts = { noremap = true, silent = true }
 
+-- Function to set up the keymaps
+local function map(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend('force', options, opts)
+  end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
@@ -102,7 +111,7 @@ vim.keymap.set('n', '<leader>tn', ':tabn<CR>', opts) --  go to next tab
 vim.keymap.set('n', '<leader>tp', ':tabp<CR>', { desc = 'Go to previous tab' }) --  go to previous tab
 
 -- Toggle line wrapping
-vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', { desc = 'Toggle line wrap' })
+vim.keymap.set('n', '<leader>w', '<cmd>set wrap!<CR>', { desc = 'Toggle line wrapping' })
 
 -- Press jk fast to exit insert mode
 vim.keymap.set('i', 'jk', '<ESC>', opts)
@@ -116,6 +125,20 @@ vim.keymap.set('v', '>', '>gv', opts)
 vim.keymap.set('v', '<A-k>', ':m .-2<CR>==', opts)
 vim.keymap.set('v', '<A-j>', ':m .+1<CR>==', opts)
 
+-- ALT + Up Arrow to move the line UP
+-- Normal mode: use 'ddpk' (delete, paste above, fix cursor) as a simple macro
+map('n', '<M-Up>', 'ddkP', { desc = 'Move line up (Normal mode)' })
+
+-- Insert mode: switch to Normal mode, execute the move, and return to Insert mode
+map('i', '<M-Up>', '<ESC>ddkPgi', { desc = 'Move line up (Insert mode)' })
+
+-- ALT + Down Arrow to move the line DOWN
+-- Normal mode: use 'ddp' (delete, paste below)
+map('n', '<M-Down>', 'ddp', { desc = 'Move line down (Normal mode)' })
+
+-- Insert mode: switch to Normal mode, execute the move, and return to Insert mode
+map('i', '<M-Down>', '<ESC>ddpAgi', { desc = 'Move line down (Insert mode)' })
+
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', opts)
 
@@ -125,6 +148,9 @@ vim.keymap.set('n', '<leader>j', '*``cgn', opts)
 -- Explicitly yank to system clipboard (highlighted and entire row)
 vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]])
 vim.keymap.set('n', '<leader>Y', [["+Y]])
+
+-- Yank entire buffer to system clipboard
+vim.keymap.set('n', '<leader>ya', [[:%y+<CR>]], { desc = '[Y]ank [A]ll buffer' })
 
 -- Toggle diagnostics
 local diagnostics_active = true
